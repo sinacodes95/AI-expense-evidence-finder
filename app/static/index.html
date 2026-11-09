@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Find answers in your accounting documents, with evidence you can check.">
+  <title>AI Expense Evidence Finder</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#question">Skip to question</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Client documents">
+      <a class="brand" href="/" aria-label="AI Expense Evidence Finder home">
+        <span class="brand-mark" aria-hidden="true">e<span>f</span></span>
+        <span>AI Expense<br><strong>Evidence Finder</strong></span>
+      </a>
+      <div class="sidebar-section">
+        <div class="section-heading"><label for="client-select">CLIENT WORKSPACE</label><button id="add-client" class="icon-button" aria-label="Add a client" data-lock>+</button></div>
+        <select id="client-select" aria-label="Select client" data-lock><option value="">Choose a client</option></select>
+        <button id="delete-client" class="quiet-button small" data-lock hidden>Remove client</button>
+      </div>
+      <div class="sidebar-section documents-section">
+        <div class="section-heading"><h2>DOCUMENTS</h2><span id="document-count" class="count">0</span></div>
+        <button id="upload-button" class="upload-zone" data-lock disabled>
+          <span class="upload-icon" aria-hidden="true">↑</span>
+          <span><strong>Add documents</strong><span class="upload-detail">Drop files here or browse</span></span>
+        </button>
+        <input id="file-input" type="file" accept=".pdf,.txt" multiple hidden>
+        <p class="file-hint">PDF or TXT · up to 10 MB each<br> PDFs need selectable text.</p>
+        <div id="document-list" class="document-list"><p class="sidebar-empty">Choose a client to add documents.</p></div>
+      </div>
+      <div class="sidebar-footer"><span class="local-dot" aria-hidden="true"></span>Local, single-user workspace</div>
+    </aside>
+
+    <main id="main-content">
+      <header class="topbar"><span id="workspace-label">YOUR WORKSPACE</span><button id="mode-button" class="mode-badge" aria-haspopup="dialog">Source search</button></header>
+      <div class="content">
+        <div class="page-heading"><p class="eyebrow">LESS SEARCHING. MORE CERTAINTY.</p><h1>Find the answer.<br><span>Keep the evidence.</span></h1><p class="intro">Ask about an expense. Get the source behind it.</p></div>
+        <div id="welcome" class="welcome-panel">
+          <div><h2>A small workspace for the facts.</h2><p>Create a client and add their documents, or explore with three fictional sample files.</p></div>
+          <button id="sample-button" class="button secondary" data-lock>Try sample documents <span aria-hidden="true">↗</span></button>
+        </div>
+        <form id="question-form" class="question-form">
+          <label for="question">What would you like to find?</label>
+          <div class="question-input"><textarea id="question" rows="2" maxlength="1000" placeholder="What period does the Northstar insurance invoice cover?" required disabled></textarea><button id="ask-button" type="submit" class="button primary" data-lock disabled><span id="ask-label">Find evidence</span><span aria-hidden="true">↗</span></button></div>
+          <div class="question-meta"><span id="scope-label">Select a client to get started.</span><span class="keyboard-hint">⌘ / Ctrl + Enter</span></div>
+        </form>
+        <div id="example-questions" class="examples" hidden>
+          <span>TRY ASKING</span>
+          <button type="button" data-question="What period does the Northstar insurance invoice cover?" data-lock>Insurance coverage</button>
+          <button type="button" data-question="What is the cancellation notice for LedgerCloud?" data-lock>Cancellation terms</button>
+          <button type="button" data-question="Has the Northstar insurance invoice been paid?" data-lock>Payment evidence</button>
+        </div>
+        <div id="activity" class="activity" role="status" hidden><span class="spinner" aria-hidden="true"></span><span id="activity-text">Searching documents…</span></div>
+        <div id="result-layout" class="result-layout">
+        <section id="results" class="results" aria-label="Answer and sources" hidden>
+          <div class="answer-panel">
+            <div class="result-heading"><h2 id="answer-heading">Findings</h2><button id="copy-button" class="quiet-button" hidden>Copy with sources</button></div>
+            <p id="asked-question" class="asked-question"></p>
+            <div id="answer-status" class="answer-status"></div>
+            <p id="answer-message" class="answer-message"></p>
+            <div id="claims" class="claims"></div>
+            <div id="source-list" class="source-list"></div>
+            <p id="review-note" class="review-note">Check the original document before using a finding.</p>
+          </div>
+        </section>
+        <section id="source-viewer" class="source-viewer" aria-label="Source document" hidden>
+          <div class="viewer-header"><div><p class="eyebrow">SOURCE DOCUMENT</p><h2 id="source-filename"></h2></div><a id="original-link" class="quiet-button" target="_blank" rel="noopener noreferrer">Open original ↗</a></div>
+          <div class="page-controls"><button id="previous-page" class="icon-button" aria-label="Previous page" data-lock>←</button><span id="page-label"></span><button id="next-page" class="icon-button" aria-label="Next page" data-lock>→</button><span class="extracted-label">Extracted text</span></div>
+          <blockquote id="selected-quote" hidden></blockquote>
+          <pre id="source-text"></pre>
+        </section>
+        </div>
+        <div id="empty-state" class="empty-state"><span class="evidence-symbol" aria-hidden="true">⌕</span><h2>A source for every finding.</h2><p>Your answer and its supporting passages will appear here.</p></div>
+        <footer class="main-footer"><span>Built for a closer look.</span><span id="privacy-note">Documents stay on this machine in source-search mode.</span></footer>
+      </div>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="client-dialog">
+    <form id="client-form"><div class="dialog-heading"><h2>Add a client</h2><button type="button" id="cancel-client" class="icon-button" aria-label="Close">×</button></div><p>Documents and questions stay within this workspace.</p><label for="client-name">Client name</label><input id="client-name" maxlength="80" placeholder="e.g. Oak & Co" required><button class="button primary" type="submit">Create workspace</button></form>
+  </dialog>
+  <dialog id="mode-dialog"><div class="dialog-heading"><h2 id="mode-title">Source search</h2><button id="close-mode" class="icon-button" aria-label="Close">×</button></div><div id="mode-description"></div></dialog>
+</body>
+</html>

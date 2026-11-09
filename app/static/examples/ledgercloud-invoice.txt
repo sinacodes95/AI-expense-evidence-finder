@@ -1,0 +1,13 @@
+FICTIONAL SAMPLE - NOT A REAL INVOICE
+
+LEDGERCLOUD
+Invoice number: LC-2026-10
+Invoice date: 1 October 2026
+Bill to: Oak & Co
+
+Description: Team plan - five user seats.
+Service period: 1 October 2026 to 31 October 2026.
+Total amount due: GBP 240.00.
+Payment terms: Due within 14 days of the invoice date.
+
+This invoice does not confirm receipt of payment.

@@ -1,0 +1,13 @@
+FICTIONAL SAMPLE - NOT A REAL INVOICE
+
+NORTHSTAR INSURANCE
+Invoice number: NS-1042
+Invoice date: 1 July 2026
+Bill to: Oak & Co
+
+Description: Annual business insurance premium
+Period of insurance: 1 July 2026 to 30 June 2027.
+Total amount due: GBP 1,200.00.
+Payment terms: Payment is due within 30 days of the invoice date.
+
+This document is an invoice, not a payment receipt.
